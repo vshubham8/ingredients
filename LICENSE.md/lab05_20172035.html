@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <title>Chef Shubham</title>
+</head>
+<body>
+<div class="jumbotron jumbotron-fluid">
+<div class="container">
+          <h2>Receipe Finder</h2>
+          <img src="http://img.freepik.com/free-vector/coloured-chefdesign_1152-73.jpg?size=338&ext=jpg" alt="chef is coming !!!">
+          <hr>
+          <div class="row">
+            <input type="text" id="inp1" placeholder="Receipe Name"/>
+            <input type="text" id="inp2" placeholder="Ingredients"/>
+            <button class="btn btn-success" id="b1">Get</button>
+          </div>
+          <hr>
+          <h1><b>Results</b></h1>
+          <table class="table" id="t1">
+          </table>
+</div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(".btn").click(function(){
+        var name=document.getElementById('inp1').value;
+        var ingredient=document.getElementById('inp2').value;
+        if(name=="")
+          {
+            var url="http://www.recipepuppy.com/api/&i="+document.getElementById('inp2').value;
+          }
+          else {
+            var url="http://www.recipepuppy.com/api/?i="+document.getElementById('inp2').value+"&q="+document.getElementById('inp1').value;
+          }
+          console.log(url);
+          $.getJSON(url, function(data){
+          	var statArr = data.results;
+            var tData = "";
+              for(var i = 0 ;i<statArr.length;i++){
+                  var name = statArr[i].title;
+                  var value = statArr[i].ingredients;
+                  var thumbs = statArr[i].thumbnail;
+
+                  tData = tData+"<tr><td>"+name+"</td><td><a href="+value+"/>"+value+"</td></tr>"
+                  console.log(name+" :"+value);
+              }
+              document.getElementById("t1").innerHTML = tData;
+          });
+      })
+    })
+  </script>
+</body>
+</html>
